@@ -19,15 +19,12 @@ export const TicketList = () => {
     }, []) // Empty array makes it run only on initial render of component
   
     useEffect(() => {
-      console.log("State Changed")
       if (showEmergencyOnly) {
-        console.log("ONLY EMERGENcY")
         const emergencyTickets = allTickets.filter(
           (ticket) => ticket.emergency === true
         )
         setFilteredTickets(emergencyTickets)
       } else {
-        console.log("Show All")
         setFilteredTickets(allTickets);
       }
     }, [showEmergencyOnly, allTickets])
