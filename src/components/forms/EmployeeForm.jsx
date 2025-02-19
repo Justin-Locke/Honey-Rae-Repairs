@@ -15,7 +15,6 @@ export const EmployeeForm = ({ currentUser }) => {
         })
     }, [currentUser])
 
-
     const handleSave = (event) => {
         event.preventDefault()
         console.log("Clicked")
@@ -32,6 +31,11 @@ export const EmployeeForm = ({ currentUser }) => {
         })
     }
 
+    const handleInputChange = (event) => {
+        const stateCopy = { ...employee }
+        stateCopy[event.target.name] = event.target.value
+        setEmployee(stateCopy)
+    }
 
     return (
         <form className="profile">
@@ -41,12 +45,9 @@ export const EmployeeForm = ({ currentUser }) => {
                     <label>Specialty:</label>
                     <input 
                     type="text"
+                    name="specialty"
                     value={employee.specialty ? employee.specialty : ""}
-                    onChange={(event) => {
-                        const copy = { ...employee }
-                        copy.specialty = event.target.value
-                        setEmployee(copy)
-                    }}
+                    onChange={handleInputChange}
                     required
                     className="form-control"
                     />
@@ -57,12 +58,9 @@ export const EmployeeForm = ({ currentUser }) => {
                     <label>Hourly Rate:</label>
                     <input 
                     type="number"
+                    name="rate"
                     value={employee.rate ? employee.rate : 0}
-                    onChange={(event) => {
-                        const copy = { ...employee }
-                        copy.rate = event.target.value
-                        setEmployee(copy)
-                    }}
+                    onChange={handleInputChange}
                     required
                     className="form-control"
                     />
