@@ -1,39 +1,38 @@
 import { useParams } from "react-router-dom"
-import { getSingleEmployee } from "../../services/employeeService"
+import { getEmployeeByUserId } from "../../services/employeeService"
 import { useEffect, useState } from "react"
 
 export const EmployeeDetails = () => {
-    const [currentEmployee, setCurrentEmployee] = useState({})
-
-    const { employeeId } = useParams()
+    const [employee, setEmployee] = useState({})
+    const { userId } = useParams()
     
     useEffect(() => {
-        getSingleEmployee(employeeId).then((employee) => {
-            setCurrentEmployee(employee[0])
+        getEmployeeByUserId(userId).then((data) => {
+            const employeeObj = data[0]
+            setEmployee(employeeObj)
         })
-    }, [currentEmployee])
+    }, [userId])
 
     return (
         <section className="employee">
             <header className="employee-header">
-                { currentEmployee?.user?.fullName || "Unkown Employee" }
+                { employee.user?.fullName }
             </header>
-            <section>
-                <span className="employee-info">Email </span>
-                <span>{ currentEmployee?.user?.email || "N/A" } </span>   
-            </section>
-            <section>
-                <span className="employee-info">Specialty </span>
-                <span>{ currentEmployee?.specialty || "N/A" }</span>
-            </section>             
-            <section>
-                <span className="employee-info">Rate </span>
-                <span>{ currentEmployee?.rate ? `$${currentEmployee.rate}/hr` : "N/A" }</span>
-            </section>
+            <div>
+                <span className="employee-info">Email : </span>
+                { employee.user?.email }  
+            </div>
+            <div>
+                <span className="employee-info">Specialty : </span>
+                { employee.specialty }
+            </div>             
+            <div>
+                <span className="employee-info">Rate : </span>
+                { employee.rate }
+            </div>
             <footer className="employee-footer">
-                Currently working on { currentEmployee?.employeeTickets?.length || 0 } tickets
-            </footer>
-            
+                Currently working on { employee.employeeTickets?.length || 0 } tickets
+            </footer>         
         </section>
     )
 }

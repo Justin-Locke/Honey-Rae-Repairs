@@ -32,12 +32,12 @@ export const ApplicationViews = () => {
       
       <Route path="customers">
         <Route index element={<CustomersList />} />
-        <Route path=":customerId" element={<CustomerDetails />} />
+        <Route path=":userId" element={<CustomerDetails />} />
       </Route> 
       
       <Route path="employees">
         <Route index element={<EmployeesList />} />
-        <Route path=":employeeId" element={<EmployeeDetails />} />
+        <Route path=":userId" element={<EmployeeDetails />} />
       </Route>
       
       <Route path="profile" element={<EmployeeForm currentUser={currentUser}/>} />

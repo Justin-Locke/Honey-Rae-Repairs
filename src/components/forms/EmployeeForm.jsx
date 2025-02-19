@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import "./Form.css"
-import { getSingleEmployee, updateEmployee } from "../../services/employeeService"
+import { getEmployeeByUserId, updateEmployee } from "../../services/employeeService"
 import { useNavigate } from "react-router-dom"
 
 export const EmployeeForm = ({ currentUser }) => {
@@ -9,7 +9,7 @@ export const EmployeeForm = ({ currentUser }) => {
     const navigate= useNavigate();
 
     useEffect(() => {
-        getSingleEmployee(currentUser.id).then(data => {
+        getEmployeeByUserId(currentUser.id).then(data => {
             const employeeObj = data[0]
             setEmployee(employeeObj)
         })
