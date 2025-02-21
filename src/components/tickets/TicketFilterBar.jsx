@@ -1,7 +1,8 @@
-export const TicketFilterBar = ({ setShowEmergencyOnly, setSearchTerm }) => {
+export const TicketFilterBar = ({ setShowEmergencyOnly, setShowOpenOnly, setSearchTerm, currentUser }) => {
 
     
-    return <div className="filter-bar"> 
+    return <div className="filter-bar">
+      {currentUser.isStaff ? ( <>
         <button 
           className="filter-btn btn-primary" 
           onClick={() => {
@@ -22,5 +23,24 @@ export const TicketFilterBar = ({ setShowEmergencyOnly, setSearchTerm }) => {
           className="ticket-search"
 
           />
+          </>) : (
+            <>
+            <button className="filter-btn btn-primary">Create Ticket</button>
+            <button 
+              className="filter-btn btn-info"
+              onClick={() => {
+                setShowOpenOnly(true)
+              }}
+              >Open Tickets
+            </button>
+            <button 
+              className="filter-btn btn-secondary"
+              onClick={() => {
+                setShowOpenOnly(false)
+              }}
+              >All My Tickets
+            </button>            
+          </>
+          )}
       </div>
 }
