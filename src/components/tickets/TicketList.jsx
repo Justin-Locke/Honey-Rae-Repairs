@@ -5,18 +5,27 @@ import "./Tickets.css"
 import { Ticket } from "./Ticket"
 import { TicketFilterBar } from "./TicketFilterBar"
 
-export const TicketList = () => {
+export const TicketList = ({ currentUser }) => {
     const [allTickets, setAllTickets] = useState([])
     const [showEmergencyOnly, setShowEmergencyOnly] = useState(false)
     const [filteredTickets, setFilteredTickets] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
 
-    useEffect(() => {
-      getAllTickets().then(ticketsArray => {
-        setAllTickets(ticketsArray);
-        console.log("Tickets set!");
+    const getAndSetTickets = () => {
+        getAllTickets().then((ticketsArray) => {
+          if (currentUser.isStaff) {
+            setAllTickets(ticketsArray);
+          } else {
+            const customerTickets = ticketsArray.filter(ticket => ticket.userId === currentUser.id)
+            setAllTickets(customerTickets)
+          }
+          console.log("Tickets set!");
       })
-    }, []) // Empty array makes it run only on initial render of component
+    }
+
+    useEffect(() => {
+      getAndSetTickets()
+    }, [currentUser]) // Empty array makes it run only on initial render of component
   
     useEffect(() => {
       if (showEmergencyOnly) {
